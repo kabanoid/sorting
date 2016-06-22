@@ -21,19 +21,11 @@ sub merge_sort {
 
     return @list if ($m <= 1); # an empty list or single-element list is considered to be sorted
 
-    my (@left, @right);
-
     # divide a list into two smaller lists
-    for (my $i = 0; $i < $m; $i++) {
-        $i % 2 
-            ? push (@left, $list[$i])
-            : push (@right, $list[$i]);
-    }
- 
-    @left  = merge_sort (@left);
-    @right = merge_sort (@right);
+    my @left    = merge_sort (splice(@list, 0, int($m/2)));
+    @list       = merge_sort (@list);
 
-    return merge (\@left, \@right);
+    return merge (\@left, \@list);
 }
 
 sub merge {
